@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $repository->save($worker);
 
-    header("Location: ../public/main.php");
+    header("Location: ../public/map.php");
     exit;
 } else {
     echo "Invalid request method.";
