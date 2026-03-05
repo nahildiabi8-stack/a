@@ -103,7 +103,7 @@ if (isset($_POST['action'])) {
             }
             if (!($_SESSION['isClean'][$id] ?? false)) {
                 $newCash += 10;
-                $delais = [15, 30, 60, 90, 120, 150, 180, 210, 600];
+                $delais = [5, 10, 20, 30, 60];
                 $_SESSION['isClean'][$id]    = true;
                 $_SESSION['cleanTime'][$id]  = time();
                 $_SESSION['cleanDelay'][$id] = $delais[array_rand($delais)];
@@ -143,7 +143,7 @@ if (isset($_POST['action'])) {
                     }
                 }
                 $newCash += 10;
-                $delais = [5, 10, 20, 30, 60, 90, 120, 150];
+                $delais = [5, 10, 20, 30, 60];
                 $_SESSION['isHungry'][$id]  = false;
                 $_SESSION['feedTime'][$id]  = time();
                 $_SESSION['feedDelay'][$id] = $delais[array_rand($delais)];
@@ -204,7 +204,7 @@ if (isset($_POST['action'])) {
         $pdo->prepare("UPDATE workers SET cash = ? WHERE id = ?")->execute([$newCash, $workerId]);
 
         // Reset timer
-        $delais = [5, 10, 20, 30, 60, 90, 120, 150];
+        $delais = [5, 10, 20, 30, 60];
         $_SESSION['isHungry'][$animalId]  = false;
         $_SESSION['feedTime'][$animalId]  = time();
         $_SESSION['feedDelay'][$animalId] = $delais[array_rand($delais)];
@@ -235,7 +235,7 @@ if (isset($_POST['action'])) {
         $newCash  = ($cashData['cash'] ?? 0) + 10;
         $pdo->prepare("UPDATE workers SET cash = ? WHERE id = ?")->execute([$newCash, $workerId]);
 
-        $delais = [15, 30, 60, 90, 120, 150, 180, 210, 600];
+        $delais = [5, 10, 20, 30, 60];
         $_SESSION['isClean'][$animalId]    = true;
         $_SESSION['cleanTime'][$animalId]  = time();
         $_SESSION['cleanDelay'][$animalId] = $delais[array_rand($delais)];
@@ -1364,7 +1364,7 @@ $jsWorkerId    = $currentWorkerId;
                 cash = data.newCash;
                 refreshCash();
                 activeA.cl = true;
-                notify('Nettoyé ! +10 💰');
+                notify('Nettoyé ! +10 cash');
                 closeModal();
             }
         }
@@ -1413,7 +1413,7 @@ $jsWorkerId    = $currentWorkerId;
         function showTip(e, a, lk) {
             tip.innerHTML = lk ?
                 `<strong>VERROUILLÉ</strong><br>Gagnez des niveaux pour débloquer.` :
-                `<strong>${a.e} ${a.n.toUpperCase()}</strong><br>${a.t}<br>${a.hg?'▶ Affamé':'▶ Rassasié'} | ${a.cl?'✨ Propre':'💩 Sale'}`;
+                `<strong>${a.e} ${a.n.toUpperCase()}</strong><br>${a.t}<br>${a.hg?'Affamé':'Rassasié'} | ${a.cl?'Propre':'Sale'}`;
             tip.style.display = 'block';
             moveTip(e);
         }
